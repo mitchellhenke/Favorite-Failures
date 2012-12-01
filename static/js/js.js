@@ -26,6 +26,8 @@ jQuery(document).ready(function ($) {
 
         //cache the variable of the data-slide attribute associated with each slide
         dataslide = $(this).attr('data-slide');
+				moveDirection = direction;
+        changeLogoColor();
 
         //If the user scrolls up change the navigation link that has the same data-slide attribute as the slide to active and 
         //remove the active class from the previous navigation link 
@@ -72,15 +74,20 @@ jQuery(document).ready(function ($) {
 
     });
     
-    //function to change color of logo from light to dark on slide 3
-    function changeLogoColor() {
-        var logo = $('.razorfishlogo');
-        if(dataslide === '2') {
-            $('.razorfishlogo').attr('src', 'images/rflogodark.png');
-        }
-        else {
-            $('.razorfishlogo').attr('src', 'images/rflogo.png');
-        }
-    }
+		function changeLogoColor() {
+			var logo = $('.razorfishlogo');
+			if((dataslide === '2' && moveDirection === 'up') || (dataslide === '1' && moveDirection === 'down')) {
+				$(".razorfishlogo").fadeOut('fast', function() { 
+					$(this).load(function() { $(this).fadeIn(); }); 
+					$(this).attr("src", 'images/rflogodark.png'); 
+				}); 
+			}
+			else if($(".razorfishlogo").attr("src") !== 'images/rflogo.png') {
 
+				$(".razorfishlogo").fadeOut('fast', function() { 
+					$(this).load(function() { $(this).fadeIn(); }); 
+					$(this).attr("src", 'images/rflogo.png'); 
+				}); 
+			}
+		}
 });
